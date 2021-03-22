@@ -20,7 +20,7 @@ Consider a JSON file like http://sample.com/file.json, as tableau 2021.1, there 
 3 - Now just like tabpy and running python, you can run Mathematica. Create a `Calculated Field` in Tableau and use Tableau's `SCRIPT_REAL()` or other `SCRIPT_SOMETHING()`. Keep in mind:
 - Unlike python, there is no need to use `Return`
 - You can access Tableau's expressions in the code by using `arg1` for the first argument, `arg2` for the second, and so on
-- Since the kernel is the same that runs your notebook, you have access to all the functions and variables you'd defined in Tableau
+- Since the kernel is the same that runs your notebook, you have access to all the functions and variables you'd in your notebook
 
 
 ### Compare to Python - Example 1
