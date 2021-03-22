@@ -66,7 +66,7 @@ SUM([Quantity])*AVG([Price])
 ```
 Here are the differences between the two columns:
 
-![](https://i.imgur.com/nyKhtbQ.png)
+![](https://i.imgur.com/uXK2dT4.png)
 
 # Load Mathematica data in Tableau
 If you want to send dynamic data directly to Tableau without saving it on disk, then this section will help you but beware that loading data with this solution is slower than reading a static file.
