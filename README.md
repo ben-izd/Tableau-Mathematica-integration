@@ -25,6 +25,7 @@ Consider a JSON file like http://sample.com/file.json, as tableau 2021.1, there 
 
 ### Compare to Python - Example 1
 Objective: increase the given price by one:
+
 If you want to do it with python and tabpy, you should run this code in Tableau's `Calculated Field`:
 
 ```tableau
@@ -53,7 +54,7 @@ DeleteObject[server]
 ## Possible Issues
 If your data depend on very small decimals like 10^-9, you might see a little difference between Mathematica calculation and Tableau. Generally, Mathematica will evaluate your code up to 20 digits in decimal but transferring these numbers to Tableau and storing them may distort them by a very little amount.
 
-For example, I have sample sales data with 3 columns `product`, `quantity`, and `price`. The goal is to calculate the average sales by multiplying the sum of `quantity` with the average of `price`.
+For example, I have a sample sales data with 3 columns `product`, `quantity`, and `price`. The goal is to calculate the average sales by multiplying the sum of `quantity` with the average of `price`.
 
 Mathematica code:
 ```tableau
@@ -76,7 +77,8 @@ If you want to send dynamic data directly to Tableau without saving it on disk, 
 - Because of `jquery` and `tableauwdc` JavaScript libraries, you and tableau should be able to connect to the internet 
 - your data should be a 2-dimensional array
 - supported data types are: Real, Integer, Boolean, String, Date
-- Column names for your data automatically generated as `C1` for the first column, `C2` for the second, and ...
+- `Missing[]` values in data will convert to `null`
+- if no `Headers` exists, column names for your data automatically generated as `C1` for the first column, `C2` for the second, and ...
 
 ```mathematica
 data = Table[{Now, RandomReal[], RandomChoice[{True, False}], RandomInteger[10], "Test"}, 4];
@@ -97,20 +99,20 @@ You should change the following code inside `SocketListen`, but make sure to ter
 (* automatically generated column names *)
 (* will use {"C1","C2","C3","C4","C5"} *)
 
-server1 = sendToTableau[data]
+server1 = setupTableauConnector[data]
 ```
 
 Your list of names should be the same length as the first row of your data:
 ```mathematica
 (* specify column names *)
 
-server1 = sendToTableau[data, {"Column 1", "Column 2", "Column 3", "Column 4", "Column 5"}];
+server1 = setupTableauConnector[data, "Headers"->{"Column 1", "Column 2", "Column 3", "Column 4", "Column 5"}];
 ```
-Changing the port:
+Changing the port with:
 ```mathematica
 (* default port: 39000 *)
 
-server1 = sendToTableau[data,40000];
+server1 = setupTableauConnector[data,"Port"->40000];
 ```
 
 ## Terminating the Server
