@@ -91,10 +91,11 @@ server1 = sendToTableau[data]
 
 4 - From now, you can use the `Refresh` button to get the newer version of the data
 
-## Change Column names
+## Settings
 You should change the following code inside `SocketListen`, but make sure to terminate the server before re-evaluating the code:
 ```mathematica
 (* automatically generated column names *)
+(* will use {"C1","C2","C3","C4","C5"} *)
 
 server1 = sendToTableau[data]
 ```
@@ -104,6 +105,12 @@ Your list of names should be the same length as the first row of your data:
 (* specify column names *)
 
 server1 = sendToTableau[data, {"Column 1", "Column 2", "Column 3", "Column 4", "Column 5"}];
+```
+Changing the port:
+```mathematica
+(* default port: 39000 *)
+
+server1 = sendToTableau[data,40000];
 ```
 
 ## Terminating the Server
