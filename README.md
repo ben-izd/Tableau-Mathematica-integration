@@ -54,7 +54,7 @@ DeleteObject[server]
 ## Possible Issues
 If your data depend on very small decimals like 10^-9, you might see a little difference between Mathematica calculation and Tableau. Generally, Mathematica will evaluate your code up to 20 digits in decimal but transferring these numbers to Tableau and storing them may distort them by a very little amount.
 
-For example, I have a sample sales data with 3 columns `product`, `quantity`, and `price`. The goal is to calculate the average sales by multiplying the sum of `quantity` with the average of `price`.
+For example, I have a sample sales data with 3 columns `product`, `quantity`, and `price`. The goal is to calculate the average sales by multiplying the sum of `quantity` with the average of `price` for each `product`.
 
 Mathematica code:
 ```tableau
