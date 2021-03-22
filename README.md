@@ -115,6 +115,11 @@ Changing the port with:
 server1 = setupTableauConnector[data,"Port"->40000];
 ```
 
+Change port and specify column names:
+```mathematica
+server1 = setupTableauConnector[data,"Headers"->{"C1","C2","C3","C4","C5"},"Port"->40000];
+```
+
 ## Terminating the Server
 After you'd done your work, run the following code in Mathematica to close the connection and shut down the server:
 ```
