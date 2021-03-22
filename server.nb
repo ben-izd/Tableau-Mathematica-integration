@@ -1,1 +1,98 @@
+parse[text_String] := 
+ Module[{output, 
+   json = ImportString[Last@StringSplit[text, "\r\n"], "RawJSON"]},
+  
+  If[MissingQ@json["data"], json["data"] = <||>];
+  
+  (* remove underscore in variable names in script *)
+  json["script"] = 
+   StringReplace[json["script"], 
+    Normal@AssociationMap[StringReplace[#, "_" -> ""] &, 
+      Keys@json["data"]]];
+  
+  (* remove underscore in variable names *)
+  json["data"] = KeyMap[StringReplace[#, "_" -> ""] &, json["data"]];
+  
+  (* set precision for all the real numbers *)
+  json["data"] = 
+   json["data"] /. 
+    x_Real :> 
+     ToString@
+      NumberForm[x, DefaultPrintPrecision -> 40, 
+       ScientificNotationThreshold -> {-40, 40}];
+  
+  output = 
+   ToExpression[
+    StringRiffle[#, {"With[{", ",", "},"}, "="] &@(List @@@ 
+        Normal@json["data"]) <> json["script"] <> "]"];
+  
+  Return[output];
+  ]
 
+exporter[data_] := 
+  ExportString[data, "JavaScriptExpression", "Compact" -> True];
+
+server = SocketListen[36000, Function[{assoc},
+    Module[{client = assoc["SourceSocket"], answer, output, evalData1,
+       evalData2, success},
+     
+     (* print each request *)
+     Print[assoc];
+     
+     If[StringStartsQ[assoc["Data"], "POST /evaluate"],
+      
+      (* evaluate script *)
+      evalData1 = EvaluationData[answer = parse@assoc["Data"];];
+      
+      (* if script successfully executed but contains symbols *)
+      If[evalData1["Success"] && 
+        Not@MissingQ@FirstPosition[answer, _Symbol, Heads -> False], 
+       evalData1 = <|"Success" -> False, 
+         "MessagesText" -> {"Result contains symbols."}|>];
+      
+      (* if script face problem (either in executaion or contains \
+symbols) *)
+      If[Not@evalData1["Success"], 
+       answer = <|"message" -> "Error processing script", 
+         "info" -> StringRiffle[evalData1["MessagesText"], "\n"]|>];
+      
+      
+      (* export output *)
+      evalData2 = EvaluationData[answer = exporter@answer;];
+      
+      (* final success is the result of successfuly executing and \
+exporting the output *)
+      success = evalData1["Success"] && evalData2["Success"];
+      
+      (* if script faild to execute or export *)
+      If[Not@success, 
+       answer = 
+        "{\"message\":\"Error exporting script \
+output\",\"info\":\"Output expression cannot be exported.\"}"];
+      
+      ,
+      (* if any url except /evaluate requested *)
+      success = True; 
+      answer = 
+       exporter@<|
+         "description" -> "Server is running on Mathematica.", 
+         "creation_time" -> "0", 
+         "state_path" -> $InstallationDirectory, 
+         "server_version" -> ToString@$VersionNumber, 
+         "name" -> "Mathematica"|>];
+     
+     output = "HTTP/1.1 " <> If[success, "200", "500"] <> " OK" <>
+       "\r\nServer: Mathematica/" <> ToString@$VersionNumber <>
+       "\r\nContent-Type: application/json" <>
+       "\r\nDate: " <> DateString[TimeZone -> 0] <> " GMT" <>
+       "\r\nContent-Length: " <> ToString@StringLength@answer <>
+       "\r\nVary: Accept-Encoding\r\n\r\n" <> answer;
+     
+     WriteString[client, output];
+     
+     (* print response *)
+     Print[answer];
+     ]
+    ]];
+
+server["Socket"]
