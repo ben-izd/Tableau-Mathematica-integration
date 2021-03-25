@@ -93,6 +93,10 @@ server1 = sendToTableau[data]
 
 4 - From now, you can use the `Refresh` button to get the newer version of the data
 
+Sample Result:
+
+![](https://i.imgur.com/E5v7mGw.png)
+
 ## Settings
 You should change the following code inside `SocketListen`, but make sure to terminate the server before re-evaluating the code:
 ```mathematica
