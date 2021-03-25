@@ -5,7 +5,7 @@ Tableau 10.3, introduce a feature to integrate python with tableau through a lib
 
 
 ## How to run Mathematica in Tableau
-When you run `tabpy`, it will run a local server that evaluates each request python code with the given data and returns back the result. The same procedure can happen in Mathematica with help of `SocketListen`, we could run a local server and by defining a function that encodes the request, apply `ToExpression` to them and returning the result.
+When you run `tabpy`, it will run a local server that evaluates each request which has python code with the given data and returns back the result. The same procedure can happen in Mathematica with help of `SocketListen`, we could run a local server and by defining a function that encodes the request, apply `ToExpression` to them and returning the result.
 
 ## How to send Mathematica data to Tableau
 Consider a JSON file like http://sample.com/file.json, as tableau 2021.1, there is no way to send that file directly to Tableau. Tableau has its own way to handle data from the web called `Web Data Connector`. In simple terms, you should run some JavaScript code before you handing the data to Tableau. With the help of Mathematica `SocketListen` we could run a server and mimic a web page to send data directly from Mathematica to Tableau.
