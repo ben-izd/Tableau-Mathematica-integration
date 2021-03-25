@@ -87,7 +87,7 @@ server1 = sendToTableau[data]
 
 2 - In Tableau, `Data` > `New Data Source` > `Web Data Connector`. In the URL section type `localhost:37000` or `127.0.0.1:37000`
 
-![](https://i.imgur.com/5vNuW2y.png)
+![](https://i.imgur.com/hEKiPT7.png)
 
 3 - When the page loaded, click on `Click here to load`
 
@@ -110,14 +110,14 @@ server1 = setupTableauConnector[data, "Headers"->{"Column 1", "Column 2", "Colum
 ```
 Changing the port with:
 ```mathematica
-(* default port: 39000 *)
+(* default port: 37000 *)
 
-server1 = setupTableauConnector[data,"Port"->40000];
+server1 = setupTableauConnector[data,"Port"->37500];
 ```
 
 Change port and specify column names:
 ```mathematica
-server1 = setupTableauConnector[data,"Headers"->{"C1","C2","C3","C4","C5"},"Port"->40000];
+server1 = setupTableauConnector[data,"Headers"->{"C1","C2","C3","C4","C5"},"Port"->37500];
 ```
 
 ## Terminating the Server
