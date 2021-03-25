@@ -26,7 +26,7 @@ Consider a JSON file like http://sample.com/file.json, as tableau 2021.1, there 
 ### Compare to Python - Example 1
 Objective: increase the given price by one:
 
-If you want to do it with python and tabpy, you should run this code in Tableau's `Calculated Field`:
+If you want to do it in python with tabpy, you should run this code in Tableau's `Calculated Field`:
 
 ```tableau
 SCRIPT_REAL("return [i+1 for i in _arg1]",SUM([Price]))
