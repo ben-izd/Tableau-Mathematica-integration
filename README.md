@@ -10,6 +10,9 @@ When you run `tabpy`, it will run a local server that evaluates each request whi
 ## How to send Mathematica data to Tableau
 Consider a JSON file like http://sample.com/file.json, as tableau 2021.1, there is no way to send that file directly to Tableau. Tableau has its own way to handle data from the web called `Web Data Connector`. In simple terms, you should run some JavaScript code before you handing the data to Tableau. With the help of Mathematica `SocketListen` we could run a server and mimic a web page to send data directly from Mathematica to Tableau.
 
+> Warning: Since Mathematica code uses the `ToExpression` function which can easily be manipulated to harm your computer, only run and open script files that you trust.
+
+
 ## Run Mathematica code inside Tableau
 1 - First either copy `server.nb` or download the file and run it. The code Automatically runs on port 36000. You could change that to any number as long as it's accessible.
 
