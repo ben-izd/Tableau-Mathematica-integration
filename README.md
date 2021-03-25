@@ -76,7 +76,7 @@ If you want to send dynamic data directly to Tableau without saving it on disk, 
 2 - Send your data with the `sendToTableau` function, keep in mind:
 - Because of `jquery` and `tableauwdc` JavaScript libraries, you and tableau should be able to connect to the internet 
 - your data should be a 2-dimensional array
-- supported data types are: Real, Integer, Boolean, String, Date
+- supported data types are: `Real`, `Integer`, `Boolean`, `String`, `Date`, `null` (`Missing` in Mathematica)
 - `Missing[]` values in data will convert to `null`
 - if no `Headers` exists, column names for your data automatically generated as `C1` for the first column, `C2` for the second, and ...
 
@@ -93,7 +93,7 @@ server1 = sendToTableau[data]
 
 4 - From now, you can use the `Refresh` button to get the newer version of the data
 
-Sample Result:
+Sample Result (as shown `null` also supported, `Missing` in Mathematica):
 
 ![](https://i.imgur.com/E5v7mGw.png)
 
